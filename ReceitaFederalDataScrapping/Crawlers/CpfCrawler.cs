@@ -8,6 +8,7 @@ namespace ReceitaFederalDataScrapping.Crawlers
     {
         private string baseUrl = @"https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/ConsultaPublicaSonoro.asp?";
         private string _acess_token;
+        private Dictionary<string, string> errorMensage = new Dictionary<string, string> { { "Error", "Data de nascimento informada está divergente ou CPF não encontrado na base de dados da Receita Federal do Brasil." } };
         private ChromeDriver driver = Utils.UtilsCrawler.ChromeDriverConfigured();
         public CpfCrawler(string acess_token)
         {
@@ -17,7 +18,11 @@ namespace ReceitaFederalDataScrapping.Crawlers
         {
             GoToUrl(cpf, dataNascimento);
             TryToPass();
-            return GetDataFromCPF();
+
+            if (CheckCorrectPage())
+                return GetDataFromCPF();
+
+            return errorMensage;
         }
         private void GoToUrl(string cpf, string dataNascimento)
         {
@@ -39,6 +44,19 @@ namespace ReceitaFederalDataScrapping.Crawlers
         private string GetImageB64()
         {
             return driver.FindElementByXPath("//*[@id='imgCaptcha']").GetAttribute("src").Replace("data:image/png;base64,", "");
+        }
+
+        private bool CheckCorrectPage()
+        {
+            try
+            {
+                string cpf = driver.FindElementByXPath("//*[@class='clConteudoDados'][1]").Text;
+            }
+            catch
+            {
+                return false;
+            }
+            return true;
         }
 
         private Dictionary<string, string> GetDataFromCPF()

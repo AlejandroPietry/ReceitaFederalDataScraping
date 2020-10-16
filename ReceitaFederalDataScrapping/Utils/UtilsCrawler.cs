@@ -29,5 +29,16 @@ namespace ReceitaFederalDataScrapping.Utils
             options.AddArgument("--headless");
             return new ChromeDriver(options);
         }
+
+        public static string FormartCpf(string cpf)
+        {
+            var a = cpf.ToArray();
+            return $"{a[0]}{a[1]}{a[2]}.{a[3]}{a[4]}{a[5]}.{a[6]}{a[7]}{a[8]}-{a[9]}{a[10]}";
+        }
+        public static string FormatDateOfBirth(string dataNascimento)
+        {
+            var a = dataNascimento.ToArray();
+            return $"{a[0]}{a[1]}/{a[2]}{a[3]}/{a[4]}{a[5]}{a[6]}{a[7]}";
+        }
     }
 }
