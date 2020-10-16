@@ -1,5 +1,4 @@
 ﻿using ReceitaFederalDataScrapping.Crawlers;
-using System;
 using System.Collections.Generic;
 
 namespace ReceitaFederalDataScrapping
@@ -11,8 +10,5 @@ namespace ReceitaFederalDataScrapping
             CpfCrawler cpfCrawler = new CpfCrawler(acess_token);
             return cpfCrawler.CpfResponse(cpf, dataNascimento);
         }
-
-        
-
     }
 }

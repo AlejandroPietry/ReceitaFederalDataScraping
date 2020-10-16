@@ -1,8 +1,5 @@
 ﻿using OpenQA.Selenium.Chrome;
-using System;
 using System.Collections.Generic;
-using System.Dynamic;
-using System.Text;
 using System.Threading;
 
 namespace ReceitaFederalDataScrapping.Crawlers
@@ -11,13 +8,12 @@ namespace ReceitaFederalDataScrapping.Crawlers
     {
         private string baseUrl = @"https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/ConsultaPublicaSonoro.asp?";
         private string _acess_token;
-        private ChromeOptions chromeOptions = new ChromeOptions();
-        private ChromeDriver driver = new ChromeDriver();
+        private ChromeDriver driver = Utils.UtilsCrawler.ChromeDriverConfigured();
         public CpfCrawler(string acess_token)
         {
             this._acess_token = acess_token;
         }
-        public Dictionary<string,string> CpfResponse(string cpf, string dataNascimento)
+        public Dictionary<string, string> CpfResponse(string cpf, string dataNascimento)
         {
             GoToUrl(cpf, dataNascimento);
             TryToPass();
@@ -30,7 +26,7 @@ namespace ReceitaFederalDataScrapping.Crawlers
         private void TryToPass()
         {
             string imageBaseB64 = GetImageB64();
-            string responseCaptcha = Utils.Utils.SolverCaptcha(imageBaseB64,this._acess_token);
+            string responseCaptcha = Utils.UtilsCrawler.SolverCaptcha(imageBaseB64, this._acess_token);
             driver.FindElementByXPath("//*[@id='txtTexto_captcha_serpro_gov_br']").SendKeys(responseCaptcha);
             Thread.Sleep(500);
             driver.FindElementByXPath("//*[@id='id_submit']").Click();
@@ -42,7 +38,7 @@ namespace ReceitaFederalDataScrapping.Crawlers
 
         private string GetImageB64()
         {
-            return driver.FindElementByXPath("//*[@id='imgCaptcha']").GetAttribute("src").Replace("data:image/png;base64,","");
+            return driver.FindElementByXPath("//*[@id='imgCaptcha']").GetAttribute("src").Replace("data:image/png;base64,", "");
         }
 
         private Dictionary<string, string> GetDataFromCPF()
@@ -54,8 +50,7 @@ namespace ReceitaFederalDataScrapping.Crawlers
             string dataInscricao = driver.FindElementByXPath("//*[@class='clConteudoDados'][5]").Text;
             string digitoVerificador = driver.FindElementByXPath("//*[@class='clConteudoDados'][6]").Text;
 
-
-            return new Dictionary<string, string> { 
+            return new Dictionary<string, string> {
                 {"CPF", cpf.Replace("No do CPF: ","") },
                 {"NOME", nome.Replace("Nome: ","") },
                 {"NASCIMENTO", dataNascimento.Replace("Data de Nascimento: ","") },

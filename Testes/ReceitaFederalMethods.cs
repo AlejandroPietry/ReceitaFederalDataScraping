@@ -12,11 +12,11 @@ namespace Testes
         }
 
         [Test]
-        public void TestCrawlerCPF()
+        public void ValidateCpfData()
         {
-            string cpf = "011.262.182-19";
-            string dataNascimento = "25/01/2001";
-            string acess_token = "D9A891E0CC5B4A42961A64A1EDE59943";
+            string cpf = "111.848.468-12";
+            string dataNascimento = "25/04/1955";
+            string acess_token = "";
 
             var receitaDataScraping = new Mock<ReceitaFederal>();
 
