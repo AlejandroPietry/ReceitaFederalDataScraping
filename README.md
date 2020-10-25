@@ -22,6 +22,18 @@ Dictionary<string,string> cpfData = receitaFederal.ValidateCpfData("00011122233"
 ```csharp
 Dictionary<string,string> cpfData = receitaFederal.ValidateCpfData("000.111.222-33","11/22/3333","BAC21DFA5AMENO5CA9608BED45F8D703");
 ```
+<h3>🖼 Imagens:</h3>
+<p>Resposta com os dados corretos:</p>
+
+![image](https://user-images.githubusercontent.com/52106304/97119112-d5cce500-16ec-11eb-91c7-8d86f2f6e9f2.png)
+![image](https://user-images.githubusercontent.com/52106304/97119245-b84c4b00-16ed-11eb-8048-a7babce4d8fc.png)
+
+<p>Resposta com os dados divergentes:</p>
+
+
+![image](https://user-images.githubusercontent.com/52106304/97119380-9c957480-16ee-11eb-92da-3b8ecb94cc0b.png)
+
+<p>Dados para teste encontrados na internet!</p>
 
 <h3>Dependencias:</h3>
 
